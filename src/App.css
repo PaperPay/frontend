@@ -11,21 +11,34 @@ body, html, #root {
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(180deg, #6a8cff 0%, #b7aaff 100%);
   color: #222;
   overflow-x: hidden;
+  background: #fff;
+}
+
+.hero-bg {
+  height: 851px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  background: linear-gradient(to bottom, #4c63ed 0%, #fff 100%);
+  pointer-events: none;
 }
 
 .container {
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+  min-height: 100vh;
+  background: transparent;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: transparent;
-  padding-top: 80px;
 }
 
 /* Header */
@@ -36,8 +49,8 @@ body, html, #root {
   width: 100%;
   z-index: 100;
   background: transparent;
-  transition: background 0.3s, box-shadow 0.3s, color 0.3s;
   border-radius: 0;
+  border-bottom: 1px solid rgba(0,0,0,.12);
 }
 .header-inner {
   max-width: 1200px;
@@ -134,7 +147,7 @@ body, html, #root {
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 2rem;
-  color: #e0e7ff;
+  color: #fff;
 }
 .hero-btn {
   font-size: 1.1rem;
@@ -150,6 +163,7 @@ body, html, #root {
   align-items: flex-start;
   gap: 2.5rem;
   margin: 0 auto;
+  margin-bottom: 60px;
   max-width: 950px;
   width: 100%;
   z-index: 2;
@@ -214,9 +228,9 @@ body, html, #root {
   color: #222;
   margin-top: 60px;
   padding: 0;
-  box-shadow: 0 -4px 24px 0 rgba(31, 38, 135, 0.08);
   z-index: 10;
   border-radius: 0;
+  border-top: 1px solid #e5e7eb;
 }
 .footer-content {
   max-width: 1200px;
@@ -275,7 +289,6 @@ body, html, #root {
   padding: 1.2rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
-  box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.04);
   flex: 1 1 0;
   text-align: left;
 }
@@ -387,7 +400,6 @@ body, html, #root {
 
 .header.scrolled {
   background: #fff;
-  box-shadow: 0 2px 16px 0 rgba(31, 38, 135, 0.08);
 }
 .header.scrolled .logo,
 .header.scrolled .nav-links a,

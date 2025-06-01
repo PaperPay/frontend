@@ -33,6 +33,9 @@ function App() {
         </div>
       </header>
 
+      {/* Hero Gradient Background */}
+      <div className="hero-bg" aria-hidden="true"></div>
+
       <div className="container">
         {/* Hero Section */}
         <section className="hero">
@@ -121,7 +124,7 @@ function App() {
 
             <div className="footer-bottom">
               <span>© 2025 PaperPay Technology Inc.</span>
-              <span>Made with love <span role="img" aria-label="UAE flag">🇦🇪</span></span>
+              <span>Made with love in <span role="img" aria-label="IND flag">🇮🇳</span></span>
             </div>
           </div>
         </footer>
