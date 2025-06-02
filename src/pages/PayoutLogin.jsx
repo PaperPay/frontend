@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './PayoutLogin.scss';
 import { useGoogleLogin } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 export default function PayoutLogin() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem('userInfo');
+    if (storedUserInfo) {
+      try {
+        const userInfo = JSON.parse(storedUserInfo);
+        if (!userInfo.expiresAt || Date.now() < userInfo.expiresAt) {
+          navigate('/app');
+        }
+      } catch (e) {}
+    }
+  }, [navigate]);
+
   const login = useGoogleLogin({
-    onSuccess: credentialResponse => {
-      // handle login, e.g. send credentialResponse to your backend
-      console.log(credentialResponse);
+    clientId: GOOGLE_CLIENT_ID,
+    onSuccess: async (tokenResponse) => {
+      try {
+        const expiresAt = Date.now() + (tokenResponse.expires_in * 1000);
+        // Fetch user info using the access token
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+        });
+        const userInfo = await userInfoResponse.json();
+        // Store both the access token and user info
+        localStorage.setItem('userInfo', JSON.stringify({
+          email: userInfo.email,
+          name: userInfo.name,
+          picture: userInfo.picture,
+          googleAccessToken: tokenResponse.access_token,
+          expiresAt,
+        }));
+        navigate('/app');
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
     },
-    onError: () => {
-      console.log('Login Failed');
+    onError: (error) => {
+      console.error('Login Failed:', error);
     },
+    scope: 'email profile',
     flow: 'implicit',
   });
 

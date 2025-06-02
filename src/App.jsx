@@ -2,6 +2,7 @@ import './App.scss'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import PayoutLogin from './pages/PayoutLogin'
+import Dashboard from './pages/Dashboard'
 
 function ProductModal({ open, onClose }) {
   const navigate = useNavigate();
@@ -175,6 +176,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainApp />} />
         <Route path="/payout" element={<PayoutLogin />} />
+        <Route path="/app" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   )
