@@ -1,10 +1,16 @@
-import './App.scss'
-import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
-import PayoutLogin from './pages/PayoutLogin'
-import Dashboard from './pages/Dashboard'
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 
-function ProductModal({ open, onClose }) {
+import PayoutLogin from './pages/PayoutLogin';
+import Dashboard from './pages/Dashboard';
+import './App.scss';
+
+type ProductModalProps = {
+  open: boolean;
+  onClose: () => void;
+};
+
+function ProductModal({ open, onClose }: ProductModalProps) {
   const navigate = useNavigate();
   if (!open) return null
   return (

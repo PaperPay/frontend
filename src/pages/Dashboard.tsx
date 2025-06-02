@@ -1,25 +1,32 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import './Dashboard.scss';
+
+// Add a type for user info
+interface UserInfo {
+  email: string;
+  name: string;
+  picture: string;
+  googleAccessToken: string;
+  expiresAt: number;
+}
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserInfo | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef();
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log('Dashboard mounted!');
     const storedUserInfo = localStorage.getItem('userInfo');
-    
     if (!storedUserInfo) {
-      console.log('No user info found, redirecting to login...');
       navigate('/payout');
       return;
     }
-
     try {
-      const userInfo = JSON.parse(storedUserInfo);
+      const userInfo: UserInfo = JSON.parse(storedUserInfo);
       if (userInfo.expiresAt && Date.now() > userInfo.expiresAt) {
         localStorage.removeItem('userInfo');
         localStorage.removeItem('googleAccessToken');
@@ -27,16 +34,17 @@ export default function Dashboard() {
         return;
       }
       setUser(userInfo);
+      setCheckingAuth(false);
     } catch (error) {
-      console.error('Error parsing user info:', error);
       navigate('/payout');
+      return;
     }
   }, [navigate]);
 
   // Close dropdown on outside click
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
       }
     }
@@ -51,6 +59,8 @@ export default function Dashboard() {
     localStorage.removeItem('googleAccessToken');
     navigate('/payout');
   };
+
+  if (checkingAuth) return null;
 
   return (
     <div className="dashboard-root">

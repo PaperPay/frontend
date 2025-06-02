@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
-import './PayoutLogin.scss';
+import React, { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-import { GOOGLE_CLIENT_ID } from '../config';
 import { useNavigate } from 'react-router-dom';
+
+import { GOOGLE_CLIENT_ID } from '../config';
+import './PayoutLogin.scss';
 
 export default function PayoutLogin() {
   const navigate = useNavigate();
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem('userInfo');
@@ -14,13 +16,14 @@ export default function PayoutLogin() {
         const userInfo = JSON.parse(storedUserInfo);
         if (!userInfo.expiresAt || Date.now() < userInfo.expiresAt) {
           navigate('/app');
+          return;
         }
       } catch (e) {}
     }
+    setCheckingAuth(false);
   }, [navigate]);
 
   const login = useGoogleLogin({
-    clientId: GOOGLE_CLIENT_ID,
     onSuccess: async (tokenResponse) => {
       try {
         const expiresAt = Date.now() + (tokenResponse.expires_in * 1000);
@@ -48,6 +51,8 @@ export default function PayoutLogin() {
     scope: 'email profile',
     flow: 'implicit',
   });
+
+  if (checkingAuth) return null;
 
   return (
     <div className="payout-bg">
