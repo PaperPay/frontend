@@ -1,8 +1,41 @@
 import './App.scss'
 import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import PayoutLogin from './pages/PayoutLogin'
 
-function App() {
+function ProductModal({ open, onClose }) {
+  const navigate = useNavigate();
+  if (!open) return null
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label="Close">×</button>
+        <h3 className="modal-title">Choose a product to continue</h3>
+        <div className="modal-options">
+          <div className="modal-option">
+            <span className="modal-icon" role="img" aria-label="Accept Payments">🧾</span>
+            <div>
+              <div className="modal-option-title">Accept Payments</div>
+              <div className="modal-option-desc">Accept crypto payments via links, invoices, or API.</div>
+            </div>
+          </div>
+          <div className="modal-divider" />
+          <div className="modal-option" onClick={() => { onClose(); navigate('/payout'); }}>
+            <span className="modal-icon" role="img" aria-label="Send Payout">🏦</span>
+            <div>
+              <div className="modal-option-title">Send Payout / Offramp Crypto</div>
+              <div className="modal-option-desc">Transfer funds to vendors, contractors, and employees.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MainApp() {
   const [scrolled, setScrolled] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,7 +46,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div className="app-border-wrap">
       {/* Header (sticky, full width) */}
       <header className={`header${scrolled ? ' scrolled' : ''}`}>
         <div className="header-inner header-flex">
@@ -27,7 +60,7 @@ function App() {
             <a href="#airdrop">Airdrop</a>
           </nav>
           <div className="header-section header-buttons">
-            <button className="btn btn-outline">Get Started</button>
+            <button className="btn btn-outline" onClick={() => setModalOpen(true)}>Get Started</button>
             <button className="btn btn-primary">Contact Sales</button>
           </div>
         </div>
@@ -124,13 +157,25 @@ function App() {
 
             <div className="footer-bottom">
               <span>© 2025 PaperPay Technology Inc.</span>
-              <span>Made with love in <span role="img" aria-label="IND flag">🇮🇳</span></span>
+              <span>Made with love <span role="img" aria-label="UAE flag">🇦🇪</span></span>
             </div>
           </div>
         </footer>
       </div>
-    </>
+
+      {/* Product Modal */}
+      <ProductModal open={modalOpen} onClose={() => setModalOpen(false)} />
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/payout" element={<PayoutLogin />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
