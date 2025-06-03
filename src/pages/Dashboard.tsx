@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './Dashboard.scss';
+import polygonIcon from '../assets/polygon.svg';
+import arbitrumIcon from '../assets/arbitrum.svg';
+import baseIcon from '../assets/base.svg';
+import starknetIcon from '../assets/starknet.svg';
+import solanaIcon from '../assets/solana.svg';
 
 // Add a type for user info
 interface UserInfo {
@@ -18,6 +23,9 @@ export default function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState('Polygon');
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem('userInfo');
@@ -54,6 +62,19 @@ export default function Dashboard() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [dropdownOpen]);
 
+  // Close account dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target as Node)) {
+        setAccountDropdownOpen(false);
+      }
+    }
+    if (accountDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [accountDropdownOpen]);
+
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('googleAccessToken');
@@ -82,11 +103,6 @@ export default function Dashboard() {
               style={{ cursor: 'pointer' }}
             >
               {user?.email}
-              <span className="dashboard-user-pill-icon" style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 8L10 12L14 8" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
             </div>
             {dropdownOpen && (
               <div className="dashboard-user-dropdown">
@@ -169,17 +185,108 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="dashboard-main">
-          <div className="dashboard-balance-section">
-            <div className="dashboard-balance-card">
-              <div className="dashboard-balance-label">Overall Balance: 0.01</div>
-              <div className="dashboard-balance-amount">$0.01</div>
-              <div className="dashboard-balance-desc">Balance on Starknet</div>
+          <div className="dashboard-balance-card-hero">
+            <div className="dashboard-balance-card-hero-header" style={{ position: 'relative' }}>
+              <span className="dashboard-balance-label">Overall Balance: 0.01</span>
+              <span
+                className="dashboard-balance-card-hero-avatar"
+                onClick={e => {
+                  e.stopPropagation();
+                  setAccountDropdownOpen(v => !v);
+                }}
+                style={{cursor: 'pointer'}}
+              >
+                <img
+                  src={
+                    selectedAccount === 'Polygon' ? polygonIcon :
+                    selectedAccount === 'Arbitrum' ? arbitrumIcon :
+                    selectedAccount === 'Base' ? baseIcon :
+                    selectedAccount === 'Starknet' ? starknetIcon :
+                    selectedAccount === 'Solana' ? solanaIcon :
+                    ''
+                  }
+                  alt={selectedAccount}
+                  className="dashboard-balance-avatar-img"
+                />
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginLeft: 4, marginTop: 2}}><path d="M6 7.5L9 10.5L12 7.5" stroke="#7C8499" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+              {accountDropdownOpen && (
+                <div
+                  className="dashboard-account-dropdown"
+                  ref={accountDropdownRef}
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    right: 0,
+                    zIndex: 1000,
+                  }}
+                >
+                  <div className="dashboard-account-dropdown-header">
+                    <span>Accounts</span>
+                    <span className="dashboard-account-dropdown-balance-label">Balance in USDC</span>
+                  </div>
+                  <div className="dashboard-account-dropdown-list">
+                    {/* Polygon */}
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Polygon' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Polygon')}>
+                      <span className="dashboard-account-dropdown-icon"><img src={polygonIcon} alt="Polygon" className="dashboard-account-dropdown-icon" /></span>
+                      <span className="dashboard-account-dropdown-name">Polygon</span>
+                      <span className="dashboard-account-dropdown-balance">0.003071</span>
+                    </div>
+                    {/* Arbitrum */}
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Arbitrum' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Arbitrum')}>
+                      <span className="dashboard-account-dropdown-icon"><img src={arbitrumIcon} alt="Arbitrum" className="dashboard-account-dropdown-icon" /></span>
+                      <span className="dashboard-account-dropdown-name">Arbitrum</span>
+                      <span className="dashboard-account-dropdown-balance">0</span>
+                    </div>
+                    {/* Base */}
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Base' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Base')}>
+                      <span className="dashboard-account-dropdown-icon"><img src={baseIcon} alt="Base" className="dashboard-account-dropdown-icon" /></span>
+                      <span className="dashboard-account-dropdown-name">Base</span>
+                      <span className="dashboard-account-dropdown-balance">0</span>
+                    </div>
+                    {/* Starknet */}
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Starknet' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Starknet')}>
+                      <span className="dashboard-account-dropdown-icon"><img src={starknetIcon} alt="Starknet" className="dashboard-account-dropdown-icon" /></span>
+                      <span className="dashboard-account-dropdown-name">Starknet</span>
+                      <span className="dashboard-account-dropdown-balance">0.007063</span>
+                    </div>
+                    {/* Solana */}
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Solana' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Solana')}>
+                      <span className="dashboard-account-dropdown-icon"><img src={solanaIcon} alt="Solana" className="dashboard-account-dropdown-icon" /></span>
+                      <span className="dashboard-account-dropdown-name">Solana</span>
+                      <span className="dashboard-account-dropdown-balance dashboard-account-dropdown-create">Create Wallet</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="dashboard-actions">
-              <button className="dashboard-action-btn">Deposit</button>
-              <button className="dashboard-action-btn">To bank</button>
-              <button className="dashboard-action-btn">Send</button>
-              <button className="dashboard-action-btn">Get Paid</button>
+            <div className="dashboard-balance-card-hero-amount">$0.01</div>
+            <div className="dashboard-balance-card-hero-desc">Balance on Starknet</div>
+          </div>
+          <div className="dashboard-actions-hero">
+            <div className="dashboard-action-hero">
+              <span className="dashboard-action-hero-icon deposit">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.75007 2.75C8.75007 2.33579 8.41428 2 8.00007 2C7.58586 2 7.25007 2.33579 7.25007 2.75L7.25006 7.25001H2.75C2.33579 7.25001 2 7.58579 2 8.00001C2 8.41422 2.33579 8.75001 2.75 8.75001H7.25006L7.25007 13.25C7.25007 13.6642 7.58586 14 8.00007 14C8.41428 14 8.75007 13.6642 8.75007 13.25L8.75006 8.75001H13.25C13.6642 8.75001 14 8.41422 14 8.00001C14 7.58579 13.6642 7.25001 13.25 7.25001L8.75006 7.25001L8.75007 2.75Z" fill="white"></path></svg>    
+              </span>
+              <span className="dashboard-action-hero-label">Deposit</span>
+            </div>
+            <div className="dashboard-action-hero">
+              <span className="dashboard-action-hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_4509_5171)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.67 2.21704L21.17 6.96704C21.4195 7.09161 21.6294 7.28328 21.776 7.52051C21.9226 7.75775 22.0002 8.03116 22 8.31004V9.75004C22 10.44 21.44 11 20.75 11H20V19H21C21.2652 19 21.5196 19.1054 21.7071 19.2929C21.8946 19.4805 22 19.7348 22 20C22 20.2653 21.8946 20.5196 21.7071 20.7071C21.5196 20.8947 21.2652 21 21 21H3C2.73478 21 2.48043 20.8947 2.29289 20.7071C2.10536 20.5196 2 20.2653 2 20C2 19.7348 2.10536 19.4805 2.29289 19.2929C2.48043 19.1054 2.73478 19 3 19H4V11H3.25C2.56 11 2 10.44 2 9.75004V8.31004C2 7.78804 2.27 7.30804 2.706 7.03604L11.329 2.21704C11.5373 2.11284 11.7671 2.05859 12 2.05859C12.2329 2.05859 12.4617 2.11284 12.67 2.21704ZM17 11H7V19H9V13H11V19H13V13H15V19H17V11ZM12 6.00004C11.7348 6.00004 11.4804 6.1054 11.2929 6.29294C11.1054 6.48047 11 6.73483 11 7.00004C11 7.26526 11.1054 7.51961 11.2929 7.70715C11.4804 7.89469 11.7348 8.00004 12 8.00004C12.2652 8.00004 12.5196 7.89469 12.7071 7.70715C12.8946 7.51961 13 7.26526 13 7.00004C13 6.73483 12.8946 6.48047 12.7071 6.29294C12.5196 6.1054 12.2652 6.00004 12 6.00004Z" fill="#5F76F9"></path></g><defs><clipPath id="clip0_4509_5171"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>  
+              </span>
+              <span className="dashboard-action-hero-label">To bank</span>
+            </div>
+            <div className="dashboard-action-hero">
+              <span className="dashboard-action-hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_4509_5174)"><path d="M7.01202 12.8173L8.30742 13.1696C9.13343 13.395 9.54536 13.5078 9.8337 13.7961C10.122 14.0845 10.2348 14.4964 10.4592 15.3213L10.8126 16.6178C11.8196 20.3089 12.3226 22.1538 13.4283 22.2145C14.534 22.2731 15.2321 20.491 16.6261 16.9289L20.4527 7.14897C21.5475 4.35222 22.0949 2.95276 21.386 2.24382C20.6771 1.53488 19.2776 2.0823 16.4809 3.17715L6.70091 7.00371C3.13885 8.39775 1.35674 9.09585 1.41528 10.2015C1.47381 11.3072 3.31988 11.8091 7.01202 12.8173Z" fill="#5F76F9"></path></g><defs><clipPath id="clip0_4509_5174"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
+              </span>
+              <span className="dashboard-action-hero-label">Send</span>
+            </div>
+            <div className="dashboard-action-hero">
+              <span className="dashboard-action-hero-icon getpaid">
+                <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3405 11.2695C18.7066 10.9034 18.7066 10.3098 18.3405 9.94371C17.9744 9.5776 17.3808 9.5776 17.0147 9.94371L11.5441 15.4144L11.5441 12.3744C11.5441 11.8566 11.1243 11.4369 10.6066 11.4369C10.0888 11.4369 9.66905 11.8566 9.66905 12.3744L9.66905 17.6777C9.66905 18.1955 10.0888 18.6152 10.6066 18.6152H15.9099C16.4276 18.6152 16.8474 18.1955 16.8474 17.6777C16.8474 17.1599 16.4276 16.7402 15.9099 16.7402L12.8699 16.7402L18.3405 11.2695Z" fill="white"></path></svg>  
+              </span>
+              <span className="dashboard-action-hero-label">Get Paid</span>
             </div>
           </div>
           <div className="dashboard-transactions-section">
@@ -194,25 +301,128 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="dashboard-transactions-list">
-              <div className="dashboard-transaction-row">
-                <div className="dashboard-transaction-type offramp">Offramp</div>
-                <div>Withdrawing of <b>421,279.08 INR</b> to ****5290</div>
-                <div className="dashboard-transaction-amount">- 5,001 USDC</div>
-              </div>
-              <div className="dashboard-transaction-row">
-                <div className="dashboard-transaction-type offramp">Offramp</div>
-                <div>Withdrawn of <b>423,082.261 INR</b> to ****5290</div>
-                <div className="dashboard-transaction-amount">- 5,082.32 USDC</div>
-              </div>
-              <div className="dashboard-transaction-row">
-                <div className="dashboard-transaction-type offramp">Offramp</div>
-                <div>Withdrawn of <b>420,533.878 INR</b> to ****5290</div>
-                <div className="dashboard-transaction-amount">- 5,000.09 USDC</div>
-              </div>
-              <div className="dashboard-transaction-row">
-                <div className="dashboard-transaction-type offramp">Offramp</div>
-                <div>Withdrawn of <b>420,000.897 INR</b> to ****5290</div>
-                <div className="dashboard-transaction-amount">- 5,003.01 USDC</div>
+              {/* Transaction Data Array */}
+              {[
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 5,001',
+                  currency: 'USDC',
+                  inr: '421,279.08',
+                  inrSuffix: 'INR',
+                  account: '****4520',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 5,082.32',
+                  currency: 'USDC',
+                  inr: '423,082.261',
+                  inrSuffix: 'INR',
+                  account: '****4520',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 5,000.09',
+                  currency: 'USDC',
+                  inr: '420,533.878',
+                  inrSuffix: 'INR',
+                  account: '****4520',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 5,003.01',
+                  currency: 'USDC',
+                  inr: '420,000.897',
+                  inrSuffix: 'INR',
+                  account: '****4520',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 5,000',
+                  currency: 'USDC',
+                  inr: '415,822.632',
+                  inrSuffix: 'INR',
+                  account: '****0540',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 1,648.24',
+                  currency: 'USDC',
+                  inr: '136,409.993',
+                  inrSuffix: 'INR',
+                  account: '****0540',
+                  flag: '🇮🇳',
+                },
+                {
+                  type: 'deposit-canceled',
+                  label: 'Deposit',
+                  description: 'Canceled to deposit on Solana network',
+                  amount: '+ 10,000',
+                  currency: 'USDC',
+                },
+                {
+                  type: 'deposit-canceled',
+                  label: 'Deposit',
+                  description: 'Canceled to deposit on Solana network',
+                  amount: '+ 1,000',
+                  currency: 'USDC',
+                },
+                {
+                  type: 'offramp',
+                  label: 'Offramp',
+                  description: 'Withdrawn of',
+                  amount: '- 3,819',
+                  currency: 'USDC',
+                  inr: '315,609.156',
+                  inrSuffix: 'INR',
+                  account: '****0540',
+                  flag: '🇮🇳',
+                },
+              ].map((tx, i) => (
+                <div className={`dashboard-transaction-row${tx.type === 'deposit-canceled' ? ' deposit-canceled' : ''}`} key={i}>
+                  <div className={`dashboard-transaction-type ${tx.type}`}>
+                    {tx.type === 'offramp' ? (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><path d="M9 2V16" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round"/><path d="M14 7L9 2L4 7" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        {tx.label}
+                      </span>
+                    ) : (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><circle cx="9" cy="9" r="8.25" fill="#FDECEE" stroke="#FBC7C7" strokeWidth="1.5"/><path d="M6.75 6.75L11.25 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/><path d="M11.25 6.75L6.75 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                        {tx.label}
+                      </span>
+                    )}
+                  </div>
+                  {tx.type === 'offramp' ? (
+                    <div>
+                      {tx.description} <b className="dashboard-inr-pill">{tx.inr} {tx.inrSuffix} {tx.flag}</b> to {tx.account}
+                    </div>
+                  ) : (
+                    <div>{tx.description}</div>
+                  )}
+                  <div className={`dashboard-transaction-amount${tx.type === 'deposit-canceled' ? ' deposit-canceled' : (tx.amount.startsWith('+') ? ' positive' : '')}`}>
+                    {tx.amount} <span style={{ color: '#7c8499', fontWeight: 400 }}>{tx.currency}</span>
+                  </div>
+                </div>
+              ))}
+              <div className="dashboard-transaction-end">
+                <span>✦ You've reached the end of your transaction history ✦</span>
               </div>
             </div>
           </div>
