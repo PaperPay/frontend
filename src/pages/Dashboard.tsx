@@ -227,31 +227,31 @@ export default function Dashboard() {
                   </div>
                   <div className="dashboard-account-dropdown-list">
                     {/* Polygon */}
-                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Polygon' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Polygon')}>
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Polygon' ? ' selected' : ''}`} onClick={() => { setSelectedAccount('Polygon'); setAccountDropdownOpen(false); }}>
                       <span className="dashboard-account-dropdown-icon"><img src={polygonIcon} alt="Polygon" className="dashboard-account-dropdown-icon" /></span>
                       <span className="dashboard-account-dropdown-name">Polygon</span>
                       <span className="dashboard-account-dropdown-balance">0.003071</span>
                     </div>
                     {/* Arbitrum */}
-                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Arbitrum' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Arbitrum')}>
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Arbitrum' ? ' selected' : ''}`} onClick={() => { setSelectedAccount('Arbitrum'); setAccountDropdownOpen(false); }}>
                       <span className="dashboard-account-dropdown-icon"><img src={arbitrumIcon} alt="Arbitrum" className="dashboard-account-dropdown-icon" /></span>
                       <span className="dashboard-account-dropdown-name">Arbitrum</span>
                       <span className="dashboard-account-dropdown-balance">0</span>
                     </div>
                     {/* Base */}
-                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Base' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Base')}>
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Base' ? ' selected' : ''}`} onClick={() => { setSelectedAccount('Base'); setAccountDropdownOpen(false); }}>
                       <span className="dashboard-account-dropdown-icon"><img src={baseIcon} alt="Base" className="dashboard-account-dropdown-icon" /></span>
                       <span className="dashboard-account-dropdown-name">Base</span>
                       <span className="dashboard-account-dropdown-balance">0</span>
                     </div>
                     {/* Starknet */}
-                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Starknet' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Starknet')}>
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Starknet' ? ' selected' : ''}`} onClick={() => { setSelectedAccount('Starknet'); setAccountDropdownOpen(false); }}>
                       <span className="dashboard-account-dropdown-icon"><img src={starknetIcon} alt="Starknet" className="dashboard-account-dropdown-icon" /></span>
                       <span className="dashboard-account-dropdown-name">Starknet</span>
                       <span className="dashboard-account-dropdown-balance">0.007063</span>
                     </div>
                     {/* Solana */}
-                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Solana' ? ' selected' : ''}`} onClick={() => setSelectedAccount('Solana')}>
+                    <div className={`dashboard-account-dropdown-row${selectedAccount === 'Solana' ? ' selected' : ''}`} onClick={() => { setSelectedAccount('Solana'); setAccountDropdownOpen(false); }}>
                       <span className="dashboard-account-dropdown-icon"><img src={solanaIcon} alt="Solana" className="dashboard-account-dropdown-icon" /></span>
                       <span className="dashboard-account-dropdown-name">Solana</span>
                       <span className="dashboard-account-dropdown-balance dashboard-account-dropdown-create">Create Wallet</span>
@@ -261,7 +261,7 @@ export default function Dashboard() {
               )}
             </div>
             <div className="dashboard-balance-card-hero-amount">$0.01</div>
-            <div className="dashboard-balance-card-hero-desc">Balance on Starknet</div>
+            <div className="dashboard-balance-card-hero-desc">Balance on {selectedAccount}</div>
           </div>
           <div className="dashboard-actions-hero">
             <div className="dashboard-action-hero">
@@ -297,130 +297,171 @@ export default function Dashboard() {
                 <button>Deposits</button>
                 <button>Offramps</button>
                 <button>Send</button>
-                <button>⚙️</button>
+                <div className="dashboard-transactions-filters-divider" style={{ width: '1px', height: '0.75rem', background: 'rgb(213 219 229)', display: 'inline-block' }} />
+                <button>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px]"><path fillRule="evenodd" clipRule="evenodd" d="M9.86769 2.5C9.16308 2.5 8.56077 3.01 8.44462 3.70538L8.37462 4.12769C8.35521 4.2337 8.30825 4.33273 8.23844 4.41483C8.16863 4.49692 8.07843 4.5592 7.97692 4.59538C7.85263 4.64188 7.72999 4.69268 7.60923 4.74769C7.51184 4.79399 7.40397 4.81382 7.29648 4.80518C7.18898 4.79654 7.08567 4.75973 6.99692 4.69846L6.64846 4.44923C6.37061 4.25072 6.03134 4.15723 5.69102 4.1854C5.35071 4.21358 5.03143 4.36158 4.79 4.60308L4.60308 4.79C4.36158 5.03143 4.21358 5.35071 4.1854 5.69102C4.15723 6.03134 4.25072 6.37061 4.44923 6.64846L4.69846 6.99692C4.75973 7.08567 4.79654 7.18898 4.80518 7.29648C4.81382 7.40397 4.79399 7.51184 4.74769 7.60923C4.69268 7.72999 4.64188 7.85263 4.59538 7.97692C4.5592 8.07843 4.49692 8.16863 4.41483 8.23844C4.33273 8.30825 4.2337 8.35521 4.12769 8.37462L3.70462 8.44538C3.36801 8.50163 3.06226 8.6754 2.8417 8.93582C2.62114 9.19624 2.50007 9.52642 2.5 9.86769V10.1323C2.5 10.8369 3.01 11.4392 3.70538 11.5554L4.12769 11.6254C4.34385 11.6615 4.51846 11.8177 4.59538 12.0231C4.64154 12.1477 4.69308 12.27 4.74769 12.3908C4.79399 12.4882 4.81382 12.596 4.80518 12.7035C4.79654 12.811 4.75973 12.9143 4.69846 13.0031L4.44923 13.3515C4.25072 13.6294 4.15723 13.9687 4.1854 14.309C4.21358 14.6493 4.36158 14.9686 4.60308 15.21L4.79 15.3969C5.28846 15.8954 6.07462 15.9608 6.64846 15.5508L6.99692 15.3015C7.08567 15.2403 7.18898 15.2035 7.29648 15.1948C7.40397 15.1862 7.51184 15.206 7.60923 15.2523C7.73 15.3069 7.85231 15.3577 7.97692 15.4046C8.18231 15.4815 8.33846 15.6562 8.37462 15.8723L8.44538 16.2954C8.56077 16.99 9.16231 17.5 9.86769 17.5H10.1323C10.8369 17.5 11.4392 16.99 11.5554 16.2946L11.6254 15.8723C11.6448 15.7663 11.6918 15.6673 11.7616 15.5852C11.8314 15.5031 11.9216 15.4408 12.0231 15.4046C12.1474 15.3581 12.27 15.3073 12.3908 15.2523C12.4882 15.206 12.596 15.1862 12.7035 15.1948C12.811 15.2035 12.9143 15.2403 13.0031 15.3015L13.3515 15.5508C13.6294 15.7493 13.9687 15.8428 14.309 15.8146C14.6493 15.7864 14.9686 15.6384 15.21 15.3969L15.3969 15.21C15.8954 14.7115 15.9608 13.9254 15.5508 13.3515L15.3015 13.0031C15.2403 12.9143 15.2035 12.811 15.1948 12.7035C15.1862 12.596 15.206 12.4882 15.2523 12.3908C15.3069 12.27 15.3577 12.1477 15.4046 12.0231C15.4815 11.8177 15.6562 11.6615 15.8723 11.6254L16.2954 11.5554C16.6321 11.4991 16.938 11.3252 17.1585 11.0647C17.3791 10.8041 17.5001 10.4737 17.5 10.1323V9.86769C17.5 9.16308 16.99 8.56077 16.2946 8.44462L15.8723 8.37462C15.7663 8.35521 15.6673 8.30825 15.5852 8.23844C15.5031 8.16863 15.4408 8.07843 15.4046 7.97692C15.3581 7.85265 15.3073 7.73001 15.2523 7.60923C15.206 7.51184 15.1862 7.40397 15.1948 7.29648C15.2035 7.18898 15.2403 7.08567 15.3015 6.99692L15.5508 6.64846C15.7493 6.37061 15.8428 6.03134 15.8146 5.69102C15.7864 5.35071 15.6384 5.03143 15.3969 4.79L15.21 4.60308C14.9686 4.36158 14.6493 4.21358 14.309 4.1854C13.9687 4.15723 13.6294 4.25072 13.3515 4.44923L13.0031 4.69846C12.9143 4.75973 12.811 4.79654 12.7035 4.80518C12.596 4.81382 12.4882 4.79399 12.3908 4.74769C12.27 4.69269 12.1474 4.64189 12.0231 4.59538C11.9216 4.5592 11.8314 4.49692 11.7616 4.41483C11.6918 4.33273 11.6448 4.2337 11.6254 4.12769L11.5554 3.70462C11.4991 3.36788 11.3252 3.06203 11.0647 2.84145C10.8041 2.62088 10.4737 2.49988 10.1323 2.5H9.86769ZM10 12.8846C10.765 12.8846 11.4988 12.5807 12.0397 12.0397C12.5807 11.4988 12.8846 10.765 12.8846 10C12.8846 9.23495 12.5807 8.50124 12.0397 7.96027C11.4988 7.4193 10.765 7.11538 10 7.11538C9.23495 7.11538 8.50124 7.4193 7.96027 7.96027C7.4193 8.50124 7.11538 9.23495 7.11538 10C7.11538 10.765 7.4193 11.4988 7.96027 12.0397C8.50124 12.5807 9.23495 12.8846 10 12.8846Z" fill="#13171F"></path></svg>
+                </button>
               </div>
             </div>
             <div className="dashboard-transactions-list">
-              {/* Transaction Data Array */}
-              {[
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 5,001',
-                  currency: 'USDC',
-                  inr: '421,279.08',
-                  inrSuffix: 'INR',
-                  account: '****4520',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 5,082.32',
-                  currency: 'USDC',
-                  inr: '423,082.261',
-                  inrSuffix: 'INR',
-                  account: '****4520',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 5,000.09',
-                  currency: 'USDC',
-                  inr: '420,533.878',
-                  inrSuffix: 'INR',
-                  account: '****4520',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 5,003.01',
-                  currency: 'USDC',
-                  inr: '420,000.897',
-                  inrSuffix: 'INR',
-                  account: '****4520',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 5,000',
-                  currency: 'USDC',
-                  inr: '415,822.632',
-                  inrSuffix: 'INR',
-                  account: '****0540',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 1,648.24',
-                  currency: 'USDC',
-                  inr: '136,409.993',
-                  inrSuffix: 'INR',
-                  account: '****0540',
-                  flag: '🇮🇳',
-                },
-                {
-                  type: 'deposit-canceled',
-                  label: 'Deposit',
-                  description: 'Canceled to deposit on Solana network',
-                  amount: '+ 10,000',
-                  currency: 'USDC',
-                },
-                {
-                  type: 'deposit-canceled',
-                  label: 'Deposit',
-                  description: 'Canceled to deposit on Solana network',
-                  amount: '+ 1,000',
-                  currency: 'USDC',
-                },
-                {
-                  type: 'offramp',
-                  label: 'Offramp',
-                  description: 'Withdrawn of',
-                  amount: '- 3,819',
-                  currency: 'USDC',
-                  inr: '315,609.156',
-                  inrSuffix: 'INR',
-                  account: '****0540',
-                  flag: '🇮🇳',
-                },
-              ].map((tx, i) => (
-                <div className={`dashboard-transaction-row${tx.type === 'deposit-canceled' ? ' deposit-canceled' : ''}`} key={i}>
-                  <div className={`dashboard-transaction-type ${tx.type}`}>
-                    {tx.type === 'offramp' ? (
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><path d="M9 2V16" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round"/><path d="M14 7L9 2L4 7" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        {tx.label}
-                      </span>
-                    ) : (
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><circle cx="9" cy="9" r="8.25" fill="#FDECEE" stroke="#FBC7C7" strokeWidth="1.5"/><path d="M6.75 6.75L11.25 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/><path d="M11.25 6.75L6.75 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                        {tx.label}
-                      </span>
-                    )}
-                  </div>
-                  {tx.type === 'offramp' ? (
-                    <div>
-                      {tx.description} <b className="dashboard-inr-pill">{tx.inr} {tx.inrSuffix} {tx.flag}</b> to {tx.account}
+              {/* Flat Transaction Data Array with date and id on each transaction */}
+              {(() => {
+                // Flat array of transactions, each with a date and unique id
+                const transactions = [
+                  {
+                    id: 'tx1',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 5,001',
+                    currency: 'USDC',
+                    inr: '421,279.08',
+                    inrSuffix: 'INR',
+                    account: '****4520',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx2',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 5,082.32',
+                    currency: 'USDC',
+                    inr: '423,082.261',
+                    inrSuffix: 'INR',
+                    account: '****4520',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx3',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 5,000.09',
+                    currency: 'USDC',
+                    inr: '420,533.878',
+                    inrSuffix: 'INR',
+                    account: '****4520',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx4',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 5,003.01',
+                    currency: 'USDC',
+                    inr: '420,000.897',
+                    inrSuffix: 'INR',
+                    account: '****4520',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx5',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 5,000',
+                    currency: 'USDC',
+                    inr: '415,822.632',
+                    inrSuffix: 'INR',
+                    account: '****0540',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx6',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 1,648.24',
+                    currency: 'USDC',
+                    inr: '136,409.993',
+                    inrSuffix: 'INR',
+                    account: '****0540',
+                    flag: '🇮🇳',
+                  },
+                  {
+                    id: 'tx7',
+                    date: '31 May',
+                    type: 'deposit-canceled',
+                    label: 'Deposit',
+                    description: 'Canceled to deposit on Solana network',
+                    amount: '+ 10,000',
+                    currency: 'USDC',
+                  },
+                  {
+                    id: 'tx8',
+                    date: '31 May',
+                    type: 'deposit-canceled',
+                    label: 'Deposit',
+                    description: 'Canceled to deposit on Solana network',
+                    amount: '+ 1,000',
+                    currency: 'USDC',
+                  },
+                  {
+                    id: 'tx9',
+                    date: '31 May',
+                    type: 'offramp',
+                    label: 'Offramp',
+                    description: 'Withdrawn of',
+                    amount: '- 3,819',
+                    currency: 'USDC',
+                    inr: '315,609.156',
+                    inrSuffix: 'INR',
+                    account: '****0540',
+                    flag: '🇮🇳',
+                  },
+                  // Add more transactions with different dates and unique ids here
+                ];
+                return transactions.map((tx) => (
+                  <div className="dashboard-transaction-row-wrapper" key={tx.id} style={{ position: 'relative' }}>
+                    <div className="dashboard-transaction-date">{tx.date}</div>
+                    <div className={`dashboard-transaction-row${tx.type === 'deposit-canceled' ? ' deposit-canceled' : ''}`}>  
+                      <div className="dashboard-transaction-left">
+                        <div className={`dashboard-transaction-type ${tx.type}`}>{
+                          tx.type === 'offramp' ? (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><path d="M9 2V16" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round"/><path d="M14 7L9 2L4 7" stroke="#4C63ED" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                              {tx.label}
+                            </span>
+                          ) : (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 4 }}><circle cx="9" cy="9" r="8.25" fill="#FDECEE" stroke="#FBC7C7" strokeWidth="1.5"/><path d="M6.75 6.75L11.25 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/><path d="M11.25 6.75L6.75 11.25" stroke="#F04438" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                              {tx.label}
+                            </span>
+                          )
+                        }</div>
+                        <div className="dashboard-transaction-desc">
+                          {tx.type === 'offramp' ? (
+                            <span>{tx.description} <b className="dashboard-inr-pill">{tx.inr} {tx.inrSuffix} {tx.flag}</b> to {tx.account}</span>
+                          ) : (
+                            <span>{tx.description}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className={`dashboard-transaction-amount${tx.type === 'deposit-canceled' ? ' deposit-canceled' : (tx.amount.startsWith('+') ? ' positive' : (tx.amount.startsWith('-') ? ' negative' : ''))}`}>{(() => {
+                        const match = tx.amount.match(/^([+-])(.*)$/);
+                        if (match) {
+                          const sign = match[1];
+                          const number = match[2].trim();
+                          if (sign === '+') {
+                            return <><span style={{color: '#22c55e', fontWeight: 400}}>{sign} {number}</span> <span style={{ color: '#7c8499', fontWeight: 400 }}>{tx.currency}</span></>;
+                          } else if (sign === '-') {
+                            return <><span style={{color: '#f04438', fontWeight: 400}}>{sign}</span> {number} <span style={{ color: '#7c8499', fontWeight: 400 }}>{tx.currency}</span></>;
+                          }
+                        }
+                        return <>{tx.amount} <span style={{ color: '#7c8499', fontWeight: 400 }}>{tx.currency}</span></>;
+                      })()}</div>
                     </div>
-                  ) : (
-                    <div>{tx.description}</div>
-                  )}
-                  <div className={`dashboard-transaction-amount${tx.type === 'deposit-canceled' ? ' deposit-canceled' : (tx.amount.startsWith('+') ? ' positive' : '')}`}>
-                    {tx.amount} <span style={{ color: '#7c8499', fontWeight: 400 }}>{tx.currency}</span>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
               <div className="dashboard-transaction-end">
                 <span>✦ You've reached the end of your transaction history ✦</span>
               </div>
