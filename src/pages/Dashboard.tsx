@@ -86,8 +86,8 @@ export default function Dashboard() {
   return (
     <div className="dashboard-root">
       <div className="dashboard-topbar-fixed">
-        <div className="dashboard-logo">
-          <span className="dashboard-logo-icon">&#9679;</span>
+        <div className="dashboard-logo dashboard-logo-block">
+          <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="dashboard-logo-img" />
           <span className="dashboard-logo-text">PaperPay</span>
         </div>
         <div className="dashboard-topbar-right">

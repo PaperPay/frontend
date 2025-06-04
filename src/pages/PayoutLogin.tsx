@@ -57,8 +57,8 @@ export default function PayoutLogin() {
   return (
     <div className="payout-bg">
       <div className="payout-center">
-        <div className="payout-logo">
-          <span className="payout-logo-icon">&#9679;</span>
+        <div className="payout-logo payout-logo-block">
+          <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="payout-logo-img" />
           <span className="payout-logo-text">PaperPay</span>
         </div>
         <div className="payout-card">

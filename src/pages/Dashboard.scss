@@ -51,6 +51,20 @@
   vertical-align: middle;
 }
 
+.dashboard-logo-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  margin-right: 0.5rem;
+}
+
 .dashboard-topbar-right {
   display: flex;
   align-items: center;

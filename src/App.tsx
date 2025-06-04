@@ -57,7 +57,18 @@ function MainApp() {
       {/* Header (sticky, full width) */}
       <header className={`header${scrolled ? ' scrolled' : ''}`}>
         <div className="header-inner header-flex">
-          <div className="header-section logo">PaperPay</div>
+          <div className="header-section logo">
+            <div className="logo-img">
+              <img
+                src={scrolled ? "/src/assets/paperpay.png" : "/src/assets/paperpay-white.png"}
+                alt="PaperPay Logo"
+                className="header-logo"
+              />
+            </div>
+            <div className="logo-text">
+              PaperPay
+            </div>
+          </div>
           <nav className="header-section nav-links">
             <a href="#products">Products</a>
             <a href="#solutions">Solutions</a>
@@ -102,7 +113,13 @@ function MainApp() {
         <footer className="footer">
           <div className="footer-content">
             <div className="footer-main">
-              <div className="footer-logo">PaperPay</div>
+              <div className="footer-logo-block">
+                <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="footer-logo-img" />
+                <div className="footer-logo-text">
+                  Simplifying payments for<br />
+                  web3 businesses.
+                </div>
+              </div>
               <div className="footer-columns">
                 <div>
                   <h4>Features</h4>

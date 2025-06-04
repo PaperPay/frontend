@@ -31,6 +31,21 @@
   font-family: inherit;
 }
 
+.payout-logo-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.payout-logo-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  display: block;
+  margin-right: 0.5rem;
+}
+
 .payout-center {
   width: 100vw;
   min-height: 100vh;
