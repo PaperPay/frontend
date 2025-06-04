@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { GOOGLE_CLIENT_ID } from '../config';
 import './PayoutLogin.scss';
+import paperpayLogo from '../assets/paperpay.png';
 
 export default function PayoutLogin() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function PayoutLogin() {
     <div className="payout-bg">
       <div className="payout-center">
         <div className="payout-logo payout-logo-block">
-          <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="payout-logo-img" />
+          <img src={paperpayLogo} alt="PaperPay Logo" className="payout-logo-img" />
           <span className="payout-logo-text">PaperPay</span>
         </div>
         <div className="payout-card">

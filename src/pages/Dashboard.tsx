@@ -7,6 +7,7 @@ import arbitrumIcon from '../assets/arbitrum.svg';
 import baseIcon from '../assets/base.svg';
 import starknetIcon from '../assets/starknet.svg';
 import solanaIcon from '../assets/solana.svg';
+import paperpayLogo from '../assets/paperpay.png';
 
 // Add a type for user info
 interface UserInfo {
@@ -87,7 +88,7 @@ export default function Dashboard() {
     <div className="dashboard-root">
       <div className="dashboard-topbar-fixed">
         <div className="dashboard-logo dashboard-logo-block">
-          <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="dashboard-logo-img" />
+          <img src={paperpayLogo} alt="PaperPay Logo" className="dashboard-logo-img" />
           <span className="dashboard-logo-text">PaperPay</span>
         </div>
         <div className="dashboard-topbar-right">

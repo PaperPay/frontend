@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import paperpayLogo from './assets/paperpay.png';
+import paperpayWhiteLogo from './assets/paperpay-white.png';
 
 import PayoutLogin from './pages/PayoutLogin';
 import Dashboard from './pages/Dashboard';
@@ -60,7 +62,7 @@ function MainApp() {
           <div className="header-section logo">
             <div className="logo-img">
               <img
-                src={scrolled ? "/src/assets/paperpay.png" : "/src/assets/paperpay-white.png"}
+                src={scrolled ? paperpayLogo : paperpayWhiteLogo}
                 alt="PaperPay Logo"
                 className="header-logo"
               />
@@ -114,7 +116,7 @@ function MainApp() {
           <div className="footer-content">
             <div className="footer-main">
               <div className="footer-logo-block">
-                <img src="/src/assets/paperpay.png" alt="PaperPay Logo" className="footer-logo-img" />
+                <img src={paperpayLogo} alt="PaperPay Logo" className="footer-logo-img" />
                 <div className="footer-logo-text">
                   Simplifying payments for<br />
                   web3 businesses.
