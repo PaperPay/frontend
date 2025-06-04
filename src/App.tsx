@@ -5,6 +5,7 @@ import paperpayWhiteLogo from './assets/paperpay-white.png';
 
 import PayoutLogin from './pages/PayoutLogin';
 import Dashboard from './pages/Dashboard';
+import NotFound from './pages/NotFound';
 import './App.scss';
 
 type ProductModalProps = {
@@ -202,6 +203,7 @@ export default function App() {
         <Route path="/" element={<MainApp />} />
         <Route path="/payout" element={<PayoutLogin />} />
         <Route path="/app" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
