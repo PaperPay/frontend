@@ -40,20 +40,20 @@ function ProductModal({ open, onClose }: ProductModalProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function MainApp() {
-  const [scrolled, setScrolled] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
+      setScrolled(window.scrollY > 0);
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="app-border-wrap">
@@ -63,9 +63,14 @@ function MainApp() {
           <div className="header-section logo">
             <div className="logo-img">
               <img
-                src={scrolled ? paperpayLogo : paperpayWhiteLogo}
+                src={paperpayLogo}
                 alt="PaperPay Logo"
-                className="header-logo"
+                className="header-logo header-logo-dark"
+              />
+              <img
+                src={paperpayWhiteLogo}
+                alt="PaperPay Logo"
+                className="header-logo header-logo-light"
               />
             </div>
             <div className="logo-text">
@@ -193,7 +198,7 @@ function MainApp() {
       {/* Product Modal */}
       <ProductModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
-  )
+  );
 }
 
 export default function App() {
@@ -206,5 +211,5 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
