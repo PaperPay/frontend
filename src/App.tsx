@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import paperpayLogo from './assets/paperpay.png';
-import paperpayWhiteLogo from './assets/paperpay-white.png';
 
 import PayoutLogin from './pages/PayoutLogin';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import './App.scss';
+import paperpayLogo from './assets/paperpay.png';
+import paperpayWhiteLogo from './assets/paperpay-white.png';
 
 type ProductModalProps = {
   open: boolean;
