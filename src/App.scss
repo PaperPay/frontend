@@ -239,6 +239,8 @@ body {
 	position: relative;
 	margin-bottom: 2rem;
 	transition: transform 0.15s, box-shadow 0.15s;
+	height: 500px;
+
 	&:hover {
 		transform: translateY(-6px) scale(1.03);
 		box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.22);
@@ -256,16 +258,20 @@ body {
 }
 .feature-img {
 	width: 100%;
-	height: 140px;
+	height: 100%;
 	background: #fff2;
 	border-radius: 14px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: $color_6;
-	font-size: 1.1rem;
-	font-weight: 500;
-	margin-top: 0.5rem;
+	overflow: hidden;
+	margin-top: auto;
+	
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 }
 .placeholder-img {
 	border: 2px dashed #fff6;

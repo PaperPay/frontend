@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound';
 import './App.scss';
 import paperpayLogo from './assets/paperpay.png';
 import paperpayWhiteLogo from './assets/paperpay-white.png';
+import paymentGatewayImg from './assets/payment-gateway.png';
+import globalPayoutImg from './assets/global-payout.png';
 
 type ProductModalProps = {
   open: boolean;
@@ -108,12 +110,16 @@ function MainApp() {
           <div className="feature-card">
             <h2>Payment Gateway</h2>
             <p>PaperPay Gateway helps businesses accept payments in crypto and fiat via integration and API.</p>
-            <div className="feature-img placeholder-img">[Image]</div>
+            <div className="feature-img">
+              <img src={paymentGatewayImg} alt="Payment Gateway" />
+            </div>
           </div>
           <div className="feature-card">
             <h2>Global Payout</h2>
             <p>PaperPay Payout helps web3 businesses pay employees, vendors, or contractors with just an email.</p>
-            <div className="feature-img placeholder-img">[Image]</div>
+            <div className="feature-img">
+              <img src={globalPayoutImg} alt="Global Payout" />
+            </div>
           </div>
         </section>
 
