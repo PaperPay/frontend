@@ -89,7 +89,7 @@ function MainApp() {
           </nav>
           <div className="header-section header-buttons">
             <button className="btn btn-outline" onClick={() => setModalOpen(true)}>Get Started</button>
-            <button className="btn btn-primary">Contact Sales</button>
+            <a href="https://forms.gle/jDh7FXh85oLzFH9f8" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Contact Sales</a>
           </div>
         </div>
       </header>
@@ -102,7 +102,7 @@ function MainApp() {
         <section className="hero">
           <h1>Next generation financial tools</h1>
           <p className="subheadline">Payment Tools and APIs for Digital Money</p>
-          <button className="btn btn-primary hero-btn">Contact Sales</button>
+          <a href="https://forms.gle/jDh7FXh85oLzFH9f8" target="_blank" rel="noopener noreferrer" className="btn btn-primary hero-btn">Contact Sales</a>
         </section>
 
         {/* Feature Cards */}
